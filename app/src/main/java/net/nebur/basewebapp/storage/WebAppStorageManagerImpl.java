@@ -11,6 +11,8 @@ import java.io.OutputStream;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import net.nebur.basewebapp.utils.FileUtils;
+
 /**
  * WebAppStorageManager implementation
  */
@@ -52,23 +54,12 @@ public class WebAppStorageManagerImpl implements WebAppStorageManager {
     @Override
     public void format() {
         File internalPath = getPath();
-        recursiveDelete(internalPath);
+        FileUtils.remove(internalPath);
     }
 
     @Override
     public File getPath() {
         return context.getFilesDir();
-    }
-
-    private void recursiveDelete(File target) {
-        if (target.isDirectory()) {
-            for (File file : target.listFiles()) {
-                recursiveDelete(file);
-            }
-        } else {
-            boolean result = target.delete();
-            Log.d("DEBUG", "Deleting " + target + ": " + (result ? "YES" : "NO"));
-        }
     }
 
     public String[] getFilesFromAssets() {
