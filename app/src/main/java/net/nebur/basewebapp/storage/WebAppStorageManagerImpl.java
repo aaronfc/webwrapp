@@ -12,13 +12,13 @@ import android.content.res.AssetManager;
 import android.util.Log;
 
 /**
- * PrivateStorageManager implementation
+ * WebAppStorageManager implementation
  */
-public class PrivateStorageManagerImpl implements PrivateStorageManager {
+public class WebAppStorageManagerImpl implements WebAppStorageManager {
 
     private Context context;
 
-    public PrivateStorageManagerImpl(Context context) {
+    public WebAppStorageManagerImpl(Context context) {
         this.context = context;
     }
 

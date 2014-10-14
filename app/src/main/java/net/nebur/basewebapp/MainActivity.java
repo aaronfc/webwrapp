@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import net.nebur.basewebapp.storage.PrivateStorageManager;
-import net.nebur.basewebapp.storage.PrivateStorageManagerImpl;
+import net.nebur.basewebapp.storage.WebAppStorageManager;
+import net.nebur.basewebapp.storage.WebAppStorageManagerImpl;
 
 
 /**
@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
     /**
      * Private storage manager
      */
-    private PrivateStorageManager storageManager;
+    private WebAppStorageManager storageManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
-        storageManager = new PrivateStorageManagerImpl(this);
+        storageManager = new WebAppStorageManagerImpl(this);
         // TODO Move warmup out of the UIThread
         warmupLocalStorage();
         setupWebView();
