@@ -14,13 +14,13 @@ import android.util.Log;
 import net.nebur.basewebapp.utils.FileUtils;
 
 /**
- * WebAppStorageManager implementation
+ * LocalAppStorageManager implementation
  */
-public class WebAppStorageManagerImpl implements WebAppStorageManager {
+public class LocalAppStorageManagerImpl implements LocalAppStorageManager {
 
     private Context context;
 
-    public WebAppStorageManagerImpl(Context context) {
+    public LocalAppStorageManagerImpl(Context context) {
         this.context = context;
     }
 

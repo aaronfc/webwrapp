@@ -3,9 +3,9 @@ package net.nebur.basewebapp.storage;
 import java.io.File;
 
 /**
- * WebAppStorageManager interface
+ * LocalAppStorageManager interface
  */
-public interface WebAppStorageManager {
+public interface LocalAppStorageManager {
     public boolean isValid();
     public void reset();
     public void format();
