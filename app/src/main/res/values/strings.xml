@@ -4,5 +4,6 @@
     <string name="app_name">BaseWebApp</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="splash_image_description">Splash-screen image</string>
 
 </resources>

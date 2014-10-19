@@ -27,7 +27,7 @@ public class LocalAppStorageManagerImpl implements LocalAppStorageManager {
     @Override
     public boolean isValid() {
         // First approach to validate is to check if index.html file exists
-        File file = new File( getPath().toString() + "/index.html");
+        File file = new File (getPath().toString() + "/original/index.html");
         return file.exists();
     }
 
@@ -62,11 +62,21 @@ public class LocalAppStorageManagerImpl implements LocalAppStorageManager {
         return context.getFilesDir();
     }
 
+    @Override
+    public boolean isUpdated() {
+        return true;
+    }
+
+    @Override
+    public void updateFromRemote() {
+        // TODO Implement this
+    }
+
     public String[] getFilesFromAssets() {
         AssetManager assetManager = context.getAssets();
         String[] files = null;
         try {
-            files = assetManager.list("");
+            files = assetManager.list("original");
         } catch (IOException e) {
             Log.e("tag", "Failed to get asset file list.", e);
         }
@@ -112,10 +122,8 @@ public class LocalAppStorageManagerImpl implements LocalAppStorageManager {
                 out.write(buffer, 0, read);
             }
             in.close();
-            in = null;
             out.flush();
             out.close();
-            out = null;
         } catch (Exception e) {
             Log.e("tag", e.getMessage());
         }

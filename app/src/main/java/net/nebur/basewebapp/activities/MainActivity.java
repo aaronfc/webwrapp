@@ -15,10 +15,12 @@ import net.nebur.basewebapp.storage.LocalAppStorageManagerImpl;
  * Main activity with fullscreen webview to be used for a webapp.
  */
 public class MainActivity extends Activity {
+
     /**
      * Private internal webview reference
      */
     private WebView webview;
+
     /**
      * Private storage manager
      */
