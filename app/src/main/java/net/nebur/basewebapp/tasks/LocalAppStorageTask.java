@@ -25,17 +25,16 @@ public class LocalAppStorageTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected Boolean doInBackground(Void... voids) {
-
         if (NetworkUtils.hasConnectivity(context)) {
             if (!manager.isUpdated()) {
                 manager.updateFromRemote();
             }
         }
-
+        // TODO Remove format call
+        manager.format();
         if (!manager.isValid()) {
             manager.reset();
         }
-
         return true;
     }
 

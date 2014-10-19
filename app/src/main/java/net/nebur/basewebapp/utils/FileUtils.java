@@ -1,5 +1,7 @@
 package net.nebur.basewebapp.utils;
 
+import android.util.Log;
+
 import java.io.File;
 
 /**
@@ -13,12 +15,12 @@ public class FileUtils {
      * @param target Target to be removed
      */
     public static void remove(File target) {
+        Log.d("FileUtils", "Removing " + target);
         if (target.isDirectory()) {
             for (File file : target.listFiles()) {
                 remove(file);
             }
-        } else {
-            target.delete();
         }
+        target.delete();
     }
 }

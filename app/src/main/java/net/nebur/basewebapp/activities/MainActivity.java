@@ -1,7 +1,9 @@
 package net.nebur.basewebapp.activities;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -33,23 +35,13 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         storageManager = new LocalAppStorageManagerImpl(this);
-        // TODO Move warmup out of the UIThread
-        warmupLocalStorage();
         setupWebView();
-        webview.loadUrl("file:///" + getFilesDir() + "/index.html");
+        webview.loadUrl("file:///" + getFilesDir() + "/webapp/index.html");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-    }
-
-    private void warmupLocalStorage() {
-        // TODO Remove format call
-        //storageManager.format();
-        if (!storageManager.isValid()) {
-            storageManager.reset();
-        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -64,5 +56,14 @@ public class MainActivity extends Activity {
         webview.setWebViewClient(webViewClient);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings().setDomStorageEnabled(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            fixJavascriptAccess(webview);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void fixJavascriptAccess(WebView webview) {
+        webview.getSettings().setAllowFileAccessFromFileURLs(true);
+        webview.getSettings().setAllowUniversalAccessFromFileURLs(true);
     }
 }

@@ -27,28 +27,24 @@ public class LocalAppStorageManagerImpl implements LocalAppStorageManager {
     @Override
     public boolean isValid() {
         // First approach to validate is to check if index.html file exists
-        File file = new File (getPath().toString() + "/original/index.html");
+        File file = new File (getPath().toString() + "/webapp/index.html");
         return file.exists();
     }
 
     @Override
     public void reset() {
+        Log.i("INFO", "Resetting local storage to assets");
         // Remove all from internal path
+        Log.d("DEBUG", "Formatting");
         format();
 
         // Copy data
+        Log.d("DEBUG", "Copying from assets");
         copyFromAssets();
     }
 
     private void copyFromAssets() {
-        String[] files = getFilesFromAssets();
-        Log.d("debug", "Files: " + files.length);
-        if (files != null) {
-            for (String file : files) {
-                Log.d("tag", "File from assets: " + file);
-                copyFileOrDir(file);
-            }
-        }
+        copyFileOrDir("webapp");
     }
 
     @Override
@@ -72,14 +68,18 @@ public class LocalAppStorageManagerImpl implements LocalAppStorageManager {
         // TODO Implement this
     }
 
-    public String[] getFilesFromAssets() {
+    public String[] getFilesFromAssets(String directory) {
         AssetManager assetManager = context.getAssets();
         String[] files = null;
         try {
-            files = assetManager.list("original");
+            files = assetManager.list(directory);
+            for(int i = 0; i<files.length; i++) {
+                files[i] = directory + "/" + files[i];
+            }
         } catch (IOException e) {
-            Log.e("tag", "Failed to get asset file list.", e);
+            Log.e("ERROR", "Failed to get asset file list.", e);
         }
+
         return files;
     }
 
@@ -96,12 +96,12 @@ public class LocalAppStorageManagerImpl implements LocalAppStorageManager {
                 File dir = new File(fullPath);
                 if (!dir.exists())
                     dir.mkdir();
-                for (int i = 0; i < assets.length; ++i) {
-                    copyFileOrDir(path + "/" + assets[i]);
+                for (String asset : assets) {
+                    copyFileOrDir(path + "/" + asset);
                 }
             }
         } catch (IOException ex) {
-            Log.e("tag", "I/O Exception", ex);
+            Log.e("ERROR", "I/O Exception", ex);
         }
     }
 
@@ -113,7 +113,7 @@ public class LocalAppStorageManagerImpl implements LocalAppStorageManager {
         try {
             in = assetManager.open(filename);
             String newFileName = getPath() + "/" + filename;
-            Log.d("tag", "File: " + newFileName);
+            Log.d("DEBUG", "File: " + newFileName);
             out = new FileOutputStream(newFileName);
 
             byte[] buffer = new byte[1024];
@@ -125,7 +125,7 @@ public class LocalAppStorageManagerImpl implements LocalAppStorageManager {
             out.flush();
             out.close();
         } catch (Exception e) {
-            Log.e("tag", e.getMessage());
+            Log.e("ERROR", e.getMessage());
         }
     }
 }
