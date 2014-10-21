@@ -7,16 +7,6 @@ import java.io.File;
  */
 public interface LocalAppStorageManager {
     /**
-     * @return Whether the local app storage is valid or not.
-     */
-    public boolean isValid();
-
-    /**
-     * Reset current local app storage to default.
-     */
-    public void reset();
-
-    /**
      * Empty current local app storage.
      */
     public void format();
@@ -36,5 +26,5 @@ public interface LocalAppStorageManager {
     /**
      * Update local storage contents with the last version from remote.
      */
-    public void updateFromRemote();
+    public void update();
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import net.nebur.basewebapp.activities.MainActivity;
 import net.nebur.basewebapp.storage.LocalAppStorageManager;
@@ -25,15 +26,13 @@ public class LocalAppStorageTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected Boolean doInBackground(Void... voids) {
+        Log.d("DEBUG", "Initializing local app storage check ...");
         if (NetworkUtils.hasConnectivity(context)) {
+            Log.d("DEBUG", "Connectivity available!");
             if (!manager.isUpdated()) {
-                manager.updateFromRemote();
+                Log.d("DEBUG", "Outdated! Trying to update ...");
+                manager.update();
             }
-        }
-        // TODO Remove format call
-        manager.format();
-        if (!manager.isValid()) {
-            manager.reset();
         }
         return true;
     }

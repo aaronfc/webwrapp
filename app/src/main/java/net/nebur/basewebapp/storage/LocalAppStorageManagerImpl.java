@@ -1,22 +1,27 @@
 package net.nebur.basewebapp.storage;
 
 import android.content.Context;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import android.content.res.AssetManager;
 import android.util.Log;
 
-import net.nebur.basewebapp.utils.FileUtils;
+import org.apache.commons.io.FileUtils;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Scanner;
 
 /**
  * LocalAppStorageManager implementation
  */
 public class LocalAppStorageManagerImpl implements LocalAppStorageManager {
+
+    // TODO Move this to config
+    private final static String DIR = "html";
+    private final static String REMOTE_URL = "http://localhost:8080/version";
 
     private Context context;
 
@@ -25,107 +30,77 @@ public class LocalAppStorageManagerImpl implements LocalAppStorageManager {
     }
 
     @Override
-    public boolean isValid() {
-        // First approach to validate is to check if index.html file exists
-        File file = new File (getPath().toString() + "/webapp/index.html");
-        return file.exists();
-    }
-
-    @Override
-    public void reset() {
-        Log.i("INFO", "Resetting local storage to assets");
-        // Remove all from internal path
-        Log.d("DEBUG", "Formatting");
-        format();
-
-        // Copy data
-        Log.d("DEBUG", "Copying from assets");
-        copyFromAssets();
-    }
-
-    private void copyFromAssets() {
-        copyFileOrDir("webapp");
-    }
-
-    @Override
     public void format() {
+        Log.d("DEBUG", "Formatting");
         File internalPath = getPath();
-        FileUtils.remove(internalPath);
+        try {
+            FileUtils.deleteDirectory(internalPath);
+        } catch (IOException e) {
+            Log.e("ERROR", "IOException when formatting local app storage with path "
+                    + internalPath, e);
+        }
     }
 
     @Override
     public File getPath() {
-        return context.getFilesDir();
+        File file = new File (getInternalMemoryPath() + "/version");
+        if (file.exists()) {
+            return new File(getInternalMemoryPath());
+        }
+        // Fallback to assets
+        return new File(getAssetsPath());
     }
 
     @Override
     public boolean isUpdated() {
-        return true;
+        File file = new File (getPath() + "/version");
+        if (file.exists()) {
+            try {
+                Scanner scanner = new Scanner(file);
+                int version = scanner.nextInt();
+                int remoteVersion = getRemoteVersion();
+                if (version >= remoteVersion) {
+                    return true;
+                }
+            } catch (FileNotFoundException e) {
+                // This should not happen
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
     @Override
-    public void updateFromRemote() {
+    public void update() {
         // TODO Implement this
+        Log.d("DEBUG", "Updating from remote ... (TBD)");
     }
 
-    public String[] getFilesFromAssets(String directory) {
-        AssetManager assetManager = context.getAssets();
-        String[] files = null;
+    private int getRemoteVersion() {
+        URL url = null;
         try {
-            files = assetManager.list(directory);
-            for(int i = 0; i<files.length; i++) {
-                files[i] = directory + "/" + files[i];
-            }
+            url = new URL(REMOTE_URL + "/version");
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(url.openStream()));
+            Scanner scanner = new Scanner(in);
+            return scanner.nextInt();
+
+        } catch (MalformedURLException e) {
+            Log.e("ERROR", "Malformed URL " + REMOTE_URL, e);
+            e.printStackTrace();
         } catch (IOException e) {
-            Log.e("ERROR", "Failed to get asset file list.", e);
+            Log.e("ERROR", "IOException when reading version from " + REMOTE_URL, e);
+            e.printStackTrace();
         }
-
-        return files;
+        return -1;
     }
 
-    private void copyFileOrDir(String path) {
-        AssetManager assetManager = context.getAssets();
-        String assets[] = null;
-        try {
-            assets = assetManager.list(path);
-            if (assets.length == 0) {
-                copyFile(path);
-            } else {
-                String fullPath = getPath() + "/" + path;
-                Log.d("DEBUG", "Directory full path: " + fullPath);
-                File dir = new File(fullPath);
-                if (!dir.exists())
-                    dir.mkdir();
-                for (String asset : assets) {
-                    copyFileOrDir(path + "/" + asset);
-                }
-            }
-        } catch (IOException ex) {
-            Log.e("ERROR", "I/O Exception", ex);
-        }
+    private String getInternalMemoryPath() {
+        return context.getFilesDir().toString() + "/" + DIR;
     }
 
-    private void copyFile(String filename) {
-        AssetManager assetManager = context.getAssets();
-
-        InputStream in = null;
-        OutputStream out = null;
-        try {
-            in = assetManager.open(filename);
-            String newFileName = getPath() + "/" + filename;
-            Log.d("DEBUG", "File: " + newFileName);
-            out = new FileOutputStream(newFileName);
-
-            byte[] buffer = new byte[1024];
-            int read;
-            while ((read = in.read(buffer)) != -1) {
-                out.write(buffer, 0, read);
-            }
-            in.close();
-            out.flush();
-            out.close();
-        } catch (Exception e) {
-            Log.e("ERROR", e.getMessage());
-        }
+    private String getAssetsPath() {
+        // TODO Try to get this PATH programmatically
+        return "file:///android_asset/" + DIR;
     }
 }

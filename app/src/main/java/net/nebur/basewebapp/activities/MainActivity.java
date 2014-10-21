@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
 
         storageManager = new LocalAppStorageManagerImpl(this);
         setupWebView();
-        webview.loadUrl("file:///" + getFilesDir() + "/webapp/index.html");
+        webview.loadUrl(storageManager.getPath() + "/index.html");
     }
 
     @Override
