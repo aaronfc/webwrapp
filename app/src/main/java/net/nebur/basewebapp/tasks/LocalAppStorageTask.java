@@ -41,7 +41,7 @@ public class LocalAppStorageTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
-        if (!SplashScreenActivity.isRunning) {
+        if (SplashScreenActivity.isRunning) {
             Intent intent = new Intent(context, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
