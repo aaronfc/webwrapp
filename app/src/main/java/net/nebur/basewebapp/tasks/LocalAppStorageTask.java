@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import net.nebur.basewebapp.activities.MainActivity;
+import net.nebur.basewebapp.activities.SplashScreenActivity;
 import net.nebur.basewebapp.storage.LocalAppStorageManager;
 import net.nebur.basewebapp.utils.NetworkUtils;
 
@@ -40,9 +41,11 @@ public class LocalAppStorageTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+        if (!SplashScreenActivity.isRunning) {
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }
         activity.finish();
     }
 }

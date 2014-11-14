@@ -19,6 +19,11 @@ public class SplashScreenActivity extends Activity {
      */
     private LocalAppStorageTask storageTask;
 
+    /**
+     * Hacky way to know if activity is running
+     */
+    public static boolean isRunning;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,5 +39,13 @@ public class SplashScreenActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+        isRunning = true;
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isRunning = false;
     }
 }
