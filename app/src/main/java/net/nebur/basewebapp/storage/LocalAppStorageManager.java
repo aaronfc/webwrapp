@@ -15,7 +15,7 @@ public interface LocalAppStorageManager {
      * Get root path to local app storage.
      * @return Root path to local app storage as a string.
      */
-    public File getPath();
+    public String getPath();
 
     /**
      * Check if storage is updated to last version.
