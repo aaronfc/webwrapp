@@ -1,8 +1,7 @@
 .gradle
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
 .DS_Store
+/.idea
 /build
-app/src/main/assets/html
-app/src/main/assets/webapp.properties
+/app/src/main/assets/html
+/app/src/main/assets/webapp.properties
