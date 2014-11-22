@@ -2,15 +2,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
     tools:context=".MainActivity"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:id="@+id/splash_screen_frame" >
 
     <ImageView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:contentDescription="@string/splash_image_description"
-        android:src="@drawable/ic_launcher"
-        android:id="@+id/splash_screen_image" />
+        android:src="@drawable/splash_image"
+        android:id="@+id/splash_screen_image"
+        android:background="#ff000000" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="18sp"
+        android:src="@drawable/splash_image"
+        android:id="@+id/splash_screen_text"
+        android:textColor="#FFAAAAAA"
+        android:text="Loading assets ..."
+        android:textIsSelectable="false"
+        android:typeface="sans"
+        android:textAlignment="center"
+        android:password="false"
+        android:gravity="center"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="50dp" />
 
 </FrameLayout>
