@@ -23,6 +23,8 @@ import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import javax.inject.Inject;
+
 /**
  * LocalAppStorageManager implementation
  */
@@ -31,6 +33,7 @@ public class LocalAppStorageManagerImpl implements LocalAppStorageManager {
     private Context context;
     private WebappConfig config;
 
+    @Inject
     public LocalAppStorageManagerImpl(Context context) {
         this.context = context;
         this.config = new WebappConfig(context);

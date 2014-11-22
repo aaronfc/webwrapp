@@ -11,6 +11,8 @@ import net.nebur.basewebapp.activities.SplashScreenActivity;
 import net.nebur.basewebapp.storage.LocalAppStorageManager;
 import net.nebur.basewebapp.utils.NetworkUtils;
 
+import javax.inject.Inject;
+
 /**
  * Asynchronous task to process all operation related to local app storage.
  */
@@ -19,6 +21,7 @@ public class LocalAppStorageTask extends AsyncTask<Void, Integer, Boolean> {
     private Context context;
     private Activity activity;
 
+    @Inject
     public LocalAppStorageTask(LocalAppStorageManager manager, Context context, Activity activity) {
         this.manager = manager;
         this.context = context;
