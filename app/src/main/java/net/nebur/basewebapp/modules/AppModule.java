@@ -7,7 +7,10 @@ package net.nebur.basewebapp.modules;
 import android.content.Context;
 
 import net.nebur.basewebapp.MainApplication;
-import net.nebur.basewebapp.tasks.LocalAppStorageTask;
+import net.nebur.basewebapp.WebappConfig;
+import net.nebur.basewebapp.storage.LocalAppStorageManager;
+import net.nebur.basewebapp.storage.LocalAppStorageManagerImpl;
+import net.nebur.basewebapp.utils.TextUtils;
 
 import javax.inject.Singleton;
 
@@ -15,10 +18,12 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module (
-    injects = {
-            MainApplication.class,
-            LocalAppStorageTask.class
-    }
+        injects = {
+                MainApplication.class,
+                WebappConfig.class,
+                LocalAppStorageManager.class,
+                TextUtils.class
+        }
 )
 public class AppModule {
 
@@ -28,7 +33,12 @@ public class AppModule {
         this.app = app;
     }
 
-    @Provides @Singleton public Context provideApplicationContext() {
+    @Provides @Singleton public MainApplication provideApplicationContext() {
         return app;
+    }
+
+    @Provides @Singleton public LocalAppStorageManager provideLocalStorageManager(
+            MainApplication application, WebappConfig config) {
+        return new LocalAppStorageManagerImpl(application, config);
     }
 }

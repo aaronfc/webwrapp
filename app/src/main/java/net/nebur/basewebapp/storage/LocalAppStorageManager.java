@@ -1,7 +1,5 @@
 package net.nebur.basewebapp.storage;
 
-import java.io.File;
-
 /**
  * LocalAppStorageManager interface
  */

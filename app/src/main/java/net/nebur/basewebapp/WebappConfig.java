@@ -1,12 +1,12 @@
 package net.nebur.basewebapp;
 
-import android.content.Context;
 import android.util.Base64;
 import android.util.Log;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+
+import javax.inject.Inject;
 
 /**
  * Webapp configuration file.
@@ -16,7 +16,8 @@ public class WebappConfig {
 
     private Properties properties;
 
-    public WebappConfig(Context context) {
+    @Inject
+    public WebappConfig(MainApplication context) {
         properties = new Properties();
         try {
             properties.load(context.getAssets().open(file));

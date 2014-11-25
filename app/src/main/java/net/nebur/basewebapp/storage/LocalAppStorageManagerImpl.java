@@ -1,8 +1,8 @@
 package net.nebur.basewebapp.storage;
 
-import android.content.Context;
 import android.util.Log;
 
+import net.nebur.basewebapp.MainApplication;
 import net.nebur.basewebapp.WebappConfig;
 
 import org.apache.commons.io.FileUtils;
@@ -30,13 +30,13 @@ import javax.inject.Inject;
  */
 public class LocalAppStorageManagerImpl implements LocalAppStorageManager {
 
-    private Context context;
+    private MainApplication context;
     private WebappConfig config;
 
     @Inject
-    public LocalAppStorageManagerImpl(Context context) {
-        this.context = context;
-        this.config = new WebappConfig(context);
+    public LocalAppStorageManagerImpl(MainApplication application, WebappConfig config) {
+        this.context = application;
+        this.config = config;
     }
 
     @Override

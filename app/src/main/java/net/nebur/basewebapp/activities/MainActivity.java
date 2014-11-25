@@ -2,31 +2,33 @@ package net.nebur.basewebapp.activities;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import net.nebur.basewebapp.R;
+import net.nebur.basewebapp.modules.MainModule;
 import net.nebur.basewebapp.storage.LocalAppStorageManager;
-import net.nebur.basewebapp.storage.LocalAppStorageManagerImpl;
+
+import java.util.Arrays;
+import java.util.List;
+
+import javax.inject.Inject;
 
 
 /**
  * Main activity with fullscreen webview to be used for a webapp.
  */
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 
     /**
      * Private internal webview reference
      */
     private WebView webview;
 
-    /**
-     * Private storage manager
-     */
-    private LocalAppStorageManager storageManager;
+    @Inject
+    LocalAppStorageManager storageManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +36,13 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
-        storageManager = new LocalAppStorageManagerImpl(this);
         setupWebView();
         webview.loadUrl("file:///" + storageManager.getPath() + "/index.html");
+    }
+
+    @Override
+    protected List<Object> getModules() {
+        return Arrays.<Object>asList(new MainModule(this));
     }
 
     @Override
