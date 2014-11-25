@@ -13,6 +13,8 @@ DONE
 - Download most up to date resources from remote.
 - Unzip remote data into internal memory.
 - Move some data to configuration files (`webapp.properties`)
+- Added dependency injection
+- Descriptive info added to splashscreen
 
 ONGOING
 =======
@@ -21,10 +23,10 @@ ONGOING
 
 TODO
 ====
-- Implement splashscreen (image from resources + update info)
+- Custom image for splashscreen
+- Cutomization of app name and icon (at least)
 - Review basic performance
 - Improve UI
-- Add dependency injection
 - Add tests
 - Rename project to something cooler and rewrite description
 
