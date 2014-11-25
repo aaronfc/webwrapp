@@ -97,15 +97,20 @@ public class LocalAppStorageManagerImpl implements LocalAppStorageManager {
         String remoteUrl = config.getRemoteUrl();
         try {
             url = new URL(remoteUrl + config.getRemoteVersionPath());
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            if (config.requiresHttpAuth()) {
+                Log.d("DEBUG", "Using HTTP_AUTH: " + config.getHttpAuthHeader());
+                connection.setRequestProperty("Authorization", config.getHttpAuthHeader());
+            }
             BufferedReader in = new BufferedReader(
-                    new InputStreamReader(url.openStream()));
+                    new InputStreamReader(connection.getInputStream()));
             Scanner scanner = new Scanner(in);
             return scanner.nextInt();
 
         } catch (MalformedURLException e) {
             Log.e("ERROR", "Malformed URL " + remoteUrl);
         } catch (IOException e) {
-            Log.e("ERROR", "IOException when reading version from " + remoteUrl);
+            Log.e("ERROR", "IOException when reading version from " + url);
         }
         return -1;
     }

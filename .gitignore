@@ -3,5 +3,6 @@
 .DS_Store
 /.idea
 /build
+*.iml
 /app/src/main/assets/html
 /app/src/main/assets/webapp.properties
