@@ -1,13 +1,9 @@
 package net.nebur.basewebapp.presenters;
 
-import android.os.AsyncTask;
-
 import net.nebur.basewebapp.R;
 import net.nebur.basewebapp.activities.SplashScreenActivity;
 import net.nebur.basewebapp.tasks.LocalAppStorageTask;
 import net.nebur.basewebapp.utils.TextUtils;
-
-import javax.inject.Inject;
 
 /**
  * SplashScreen presenter
