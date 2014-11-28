@@ -1,4 +1,4 @@
-package net.nebur.basewebapp.activities;
+package net.nebur.basewebapp.activity;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -8,7 +8,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import net.nebur.basewebapp.R;
-import net.nebur.basewebapp.modules.MainModule;
+import net.nebur.basewebapp.di.MainModule;
 import net.nebur.basewebapp.storage.LocalAppStorageManager;
 
 import java.util.Arrays;

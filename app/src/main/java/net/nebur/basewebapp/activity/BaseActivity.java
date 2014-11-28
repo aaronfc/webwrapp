@@ -1,9 +1,7 @@
-package net.nebur.basewebapp.activities;
+package net.nebur.basewebapp.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-
-import net.nebur.basewebapp.MainApplication;
 
 import java.util.List;
 
@@ -29,7 +27,7 @@ public abstract class BaseActivity extends Activity {
     }
 
     private void startInjection() {
-        activityGraph = ((MainApplication) getApplication()).createScopedGraph(getModules().toArray());
+        activityGraph = ObjectGraph.create(getModules().toArray());
         activityGraph.inject(this);
     }
 

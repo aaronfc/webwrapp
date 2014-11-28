@@ -1,15 +1,10 @@
-package net.nebur.basewebapp.modules;
+package net.nebur.basewebapp.di;
 
 /**
  * App module
  */
 
-import net.nebur.basewebapp.MainApplication;
-import net.nebur.basewebapp.WebappConfig;
-import net.nebur.basewebapp.activities.MainActivity;
-import net.nebur.basewebapp.storage.LocalAppStorageManager;
-import net.nebur.basewebapp.storage.LocalAppStorageManagerImpl;
-import net.nebur.basewebapp.tasks.LocalAppStorageTask;
+import net.nebur.basewebapp.activity.MainActivity;
 
 import javax.inject.Singleton;
 
@@ -20,7 +15,7 @@ import dagger.Provides;
         injects = {
                 MainActivity.class
         },
-        addsTo = AppModule.class
+        addsTo = WebWrappModule.class
 )
 public class MainModule {
 
