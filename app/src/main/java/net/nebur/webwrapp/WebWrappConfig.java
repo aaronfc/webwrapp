@@ -1,6 +1,6 @@
-package net.nebur.basewebapp;
+package net.nebur.webwrapp;
 
-import android.app.Application;
+import android.content.Context;
 import android.util.Base64;
 import android.util.Log;
 
@@ -10,7 +10,8 @@ import java.util.Properties;
 import javax.inject.Inject;
 
 /**
- * Webapp configuration file.
+ * WebWrapp configuration handler.
+ * TODO Some cleaning up and proper HTTP Authentication implementation
  */
 public class WebWrappConfig {
     private static final String file = "webwrapp-config.properties";
@@ -18,12 +19,12 @@ public class WebWrappConfig {
     private Properties properties;
 
     @Inject
-    public WebWrappConfig(Application context) {
+    public WebWrappConfig(Context context) {
         properties = new Properties();
         try {
             properties.load(context.getAssets().open(file));
         } catch (IOException e) {
-            Log.d("ERROR", "Error opening properties file: " + file);
+            Log.d("ERROR", "Missing configuration file in the assets folder. File: " + file);
         }
     }
 
@@ -36,11 +37,12 @@ public class WebWrappConfig {
     }
 
     public boolean requiresHttpAuth() {
-        return properties.getProperty("requires_http_auth", "no").equals("yes");
+        return properties.getProperty("requires_http_auth", "false").equals("true");
     }
 
     public String getHttpAuthHeader() {
-        String authentication = properties.getProperty("http_auth_user") + ":" + properties.getProperty("http_auth_pass");
+        String authentication = properties.getProperty("http_auth_user")
+                + ":" + properties.getProperty("http_auth_pass");
         return "Basic " + Base64.encodeToString(authentication.getBytes(), Base64.NO_WRAP);
     }
 

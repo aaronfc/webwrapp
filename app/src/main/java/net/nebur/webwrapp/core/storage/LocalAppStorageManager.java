@@ -1,4 +1,4 @@
-package net.nebur.basewebapp.storage;
+package net.nebur.webwrapp.core.storage;
 
 /**
  * LocalAppStorageManager interface

@@ -1,16 +1,17 @@
-package net.nebur.basewebapp.di;
+package net.nebur.webwrapp.di;
 
 /**
  * App module
  */
 
 import android.app.Application;
+import android.content.Context;
 
-import net.nebur.basewebapp.WebWrapp;
-import net.nebur.basewebapp.WebWrappConfig;
-import net.nebur.basewebapp.storage.LocalAppStorageManager;
-import net.nebur.basewebapp.storage.LocalAppStorageManagerImpl;
-import net.nebur.basewebapp.tasks.LocalStorageUpdaterTaskFactory;
+import net.nebur.webwrapp.WebWrapp;
+import net.nebur.webwrapp.WebWrappConfig;
+import net.nebur.webwrapp.core.storage.LocalAppStorageManager;
+import net.nebur.webwrapp.core.storage.LocalAppStorageManagerImpl;
+import net.nebur.webwrapp.core.tasks.LocalStorageUpdaterTaskFactory;
 
 import javax.inject.Singleton;
 
@@ -21,7 +22,7 @@ import dagger.Provides;
         injects = {
                 WebWrapp.class,
                 WebWrappConfig.class,
-                Application.class,
+                Context.class,
                 LocalAppStorageManager.class,
                 LocalStorageUpdaterTaskFactory.class
         }
@@ -38,17 +39,17 @@ public class WebWrappModule {
         return webWrapp;
     }
 
-    @Provides @Singleton public Application provideApplication() {
-        return webWrapp.getApplication();
+    @Provides @Singleton public Context provideContext() {
+        return webWrapp.getContext();
     }
 
     @Provides @Singleton public LocalAppStorageManager provideLocalStorageManager(
-            Application application, WebWrappConfig config) {
-        return new LocalAppStorageManagerImpl(application, config);
+            Context context, WebWrappConfig config) {
+        return new LocalAppStorageManagerImpl(context, config);
     }
 
     @Provides @Singleton public LocalStorageUpdaterTaskFactory provideLocalStorageUpdaterTaskFactory(
-            Application application, LocalAppStorageManager storageManager) {
-        return new LocalStorageUpdaterTaskFactory(application, storageManager);
+            Context context, LocalAppStorageManager storageManager) {
+        return new LocalStorageUpdaterTaskFactory(context, storageManager);
     }
 }

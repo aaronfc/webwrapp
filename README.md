@@ -39,3 +39,7 @@ HOW TO
 - Create `webapp.properties` file in `assets/` folder (check `webapp-sample.properties`)
 - Copy into `assets/html` folder (or subfolder defined in `webapp.properties`) your webapp (initial version will be included in the APK).
 - Make sure that your webapp entry point is `index.html`
+
+HELP
+====
+Publish to maven local repository: `mvn install:install-file -Dfile=d:\mylibrary-{version}.aar -DgroupId=com.example -DartifactId=mylibrary -Dversion={version} -Dpackaging=aar`

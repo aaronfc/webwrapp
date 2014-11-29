@@ -1,12 +1,12 @@
-package net.nebur.basewebapp.tasks;
+package net.nebur.webwrapp.core.tasks;
 
-import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import net.nebur.basewebapp.WebWrappListener;
-import net.nebur.basewebapp.storage.LocalAppStorageManager;
-import net.nebur.basewebapp.utils.NetworkUtils;
+import net.nebur.webwrapp.WebWrappListener;
+import net.nebur.webwrapp.core.storage.LocalAppStorageManager;
+import net.nebur.webwrapp.utils.NetworkUtils;
 
 /**
  * Asynchronous task to process all operation related to local app storage.
@@ -14,17 +14,17 @@ import net.nebur.basewebapp.utils.NetworkUtils;
 public class LocalStorageUpdaterTask extends AsyncTask<Void, LocalStorageUpdaterTask.Status, Boolean> {
 
     public enum Status {
-        CHECKING_CONNECTIVITY,
+        STARTING,
         CHECKING_REMOTE_VERSION,
-        UPDATE_AVAILABLE
+        UPDATING
     }
 
-    private Application application;
+    private Context context;
     private LocalAppStorageManager manager;
     private WebWrappListener listener;
 
-    public LocalStorageUpdaterTask(Application application, LocalAppStorageManager manager, WebWrappListener listener) {
-        this.application = application;
+    public LocalStorageUpdaterTask(Context context, LocalAppStorageManager manager, WebWrappListener listener) {
+        this.context = context;
         this.manager = manager;
         this.listener = listener;
     }
@@ -33,13 +33,13 @@ public class LocalStorageUpdaterTask extends AsyncTask<Void, LocalStorageUpdater
     protected Boolean doInBackground(Void... voids) {
         // TODO Review this publish-progress calls
         Log.d("DEBUG", "Initializing local app storage check ...");
-        publishProgress(Status.CHECKING_CONNECTIVITY);
-        if (NetworkUtils.hasConnectivity(application)) {
+        publishProgress(Status.STARTING);
+        if (NetworkUtils.hasConnectivity(context)) {
             Log.d("DEBUG", "Connectivity available!");
             publishProgress(Status.CHECKING_REMOTE_VERSION);
             if (!manager.isUpdated()) {
                 Log.d("DEBUG", "Outdated! Trying to update ...");
-                publishProgress(Status.UPDATE_AVAILABLE);
+                publishProgress(Status.UPDATING);
                 manager.update();
             }
         }
@@ -53,14 +53,14 @@ public class LocalStorageUpdaterTask extends AsyncTask<Void, LocalStorageUpdater
         if (statuses.length > 0) {
             Status status = statuses[0];
             switch (status) {
-                case CHECKING_CONNECTIVITY:
-                    listener.onStart();
+                case STARTING:
+                    listener.onWarmUpStart();
                     break;
                 case CHECKING_REMOTE_VERSION:
                     listener.onCheckingVersion();
                     break;
-                case UPDATE_AVAILABLE:
-                    listener.onUpdateAvailable();
+                case UPDATING:
+                    listener.onUpdating();
                     break;
                 default:
                     listener.onUnknownEvent(status.ordinal());
