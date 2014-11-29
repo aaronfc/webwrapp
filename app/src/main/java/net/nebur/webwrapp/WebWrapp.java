@@ -57,8 +57,7 @@ public class WebWrapp {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    public void setupWebView(Activity activity, int webViewId) {
-        WebView webview = (WebView) activity.findViewById(webViewId);
+    public void setupWebView(Activity activity, WebView webview) {
         WebViewClient webViewClient = new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
