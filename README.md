@@ -33,10 +33,7 @@ HOW TO
 - Implement `WebWrappListener` and wait `onReady(String url)` method to be called
 - When `onReady` is called, load the received url in your `WebView`
 
-HELP
-====
-- Trouble importing project into Android Studio?
-  - Open main `settings.gradle` file in the root of the project.
-  - Remove the line `project(":app").name = "webwrapp"`
-  - Now try to import again the project in Android Studio
-  - Add the line you just removed again to the `settings.gradle`
+FAQ
+===
+No questions, yet
+

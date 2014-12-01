@@ -1,2 +1,1 @@
-include ':app'
-project(":app").name = "webwrapp"
+include ':webwrapp'
