@@ -22,7 +22,6 @@ import dagger.Provides;
         injects = {
                 WebWrapp.class,
                 WebWrappConfig.class,
-                Context.class,
                 LocalAppStorageManager.class,
                 LocalStorageUpdaterTaskFactory.class
         }
@@ -33,10 +32,6 @@ public class WebWrappModule {
 
     public WebWrappModule(WebWrapp webWrapp) {
         this.webWrapp = webWrapp;
-    }
-
-    @Provides @Singleton public WebWrapp provideWebWrapp() {
-        return webWrapp;
     }
 
     @Provides @Singleton public Context provideContext() {
