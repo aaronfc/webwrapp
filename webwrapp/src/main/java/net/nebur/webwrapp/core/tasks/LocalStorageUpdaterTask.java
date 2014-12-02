@@ -71,6 +71,6 @@ public class LocalStorageUpdaterTask extends AsyncTask<Void, LocalStorageUpdater
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
-        listener.onReady(manager.getStoragePath());
+        listener.onReady(manager.getIndexFullPath());
     }
 }
