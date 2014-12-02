@@ -13,7 +13,13 @@ public interface LocalAppStorageManager {
      * Get root path to local app storage.
      * @return Root path to local app storage as a string.
      */
-    public String getPath();
+    public String getStoragePath();
+
+    /**
+     * Get full path to the index file.
+     * @return Full path of the index file.
+     */
+    public String getIndexFullPath();
 
     /**
      * Check if storage is updated to last version.

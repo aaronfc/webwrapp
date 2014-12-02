@@ -54,7 +54,7 @@ public class LocalAppStorageManagerImpl implements LocalAppStorageManager {
     }
 
     @Override
-    public String getPath() {
+    public String getStoragePath() {
         File file = new File (getInternalMemoryPath() + config.getRemoteVersionPath());
         if (file.exists()) {
             return getInternalMemoryPath();
@@ -64,9 +64,14 @@ public class LocalAppStorageManagerImpl implements LocalAppStorageManager {
     }
 
     @Override
+    public String getIndexFullPath() {
+        return String.format("file:///%s/%s", getStoragePath(), config.getIndexRelativePath());
+    }
+
+    @Override
     public boolean isUpdated() {
         // File won't exist if path points to assets folder
-        File file = new File (getPath() + config.getRemoteVersionPath());
+        File file = new File (getStoragePath() + config.getRemoteVersionPath());
         if (file.exists()) {
             try {
                 Scanner scanner = new Scanner(file);

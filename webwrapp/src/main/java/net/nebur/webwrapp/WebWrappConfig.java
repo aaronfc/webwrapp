@@ -36,6 +36,10 @@ public class WebWrappConfig {
         return properties.getProperty("contents_dir");
     }
 
+    public String getIndexRelativePath() {
+        return properties.getProperty("index_relative_path", "index.html");
+    }
+
     public boolean requiresHttpAuth() {
         return properties.getProperty("requires_http_auth", "false").equals("true");
     }
