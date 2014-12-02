@@ -20,10 +20,7 @@ import dagger.Provides;
 
 @Module (
         injects = {
-                WebWrapp.class,
-                WebWrappConfig.class,
-                LocalAppStorageManager.class,
-                LocalStorageUpdaterTaskFactory.class
+                WebWrapp.class
         }
 )
 public class WebWrappModule {
@@ -39,12 +36,7 @@ public class WebWrappModule {
     }
 
     @Provides @Singleton public LocalAppStorageManager provideLocalStorageManager(
-            Context context, WebWrappConfig config) {
-        return new LocalAppStorageManagerImpl(context, config);
-    }
-
-    @Provides @Singleton public LocalStorageUpdaterTaskFactory provideLocalStorageUpdaterTaskFactory(
-            Context context, LocalAppStorageManager storageManager) {
-        return new LocalStorageUpdaterTaskFactory(context, storageManager);
+            LocalAppStorageManagerImpl implementation) {
+        return implementation;
     }
 }
