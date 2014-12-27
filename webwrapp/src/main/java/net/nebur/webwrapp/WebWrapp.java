@@ -70,6 +70,8 @@ public class WebWrapp {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             fixJavascriptAccess(webview);
         }
+        // Fix for SDK 15-16 (related to local storage)
+        webview.getSettings().setAllowUniversalAccessFromFileURLs(true);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)

@@ -19,7 +19,6 @@ android {
     buildToolsVersion "20.0.0"
 
     defaultConfig {
-        applicationId "net.nebur.webwrapp"
         minSdkVersion 10
         targetSdkVersion 20
         versionCode 1
@@ -27,7 +26,7 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
